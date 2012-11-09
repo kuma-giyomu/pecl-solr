@@ -1,5 +1,14 @@
 This is a Git relocation of the SVN repository of the PECL Solr module by Israel Ekpo.
 All credits belong to him.
 
+There is additionally a new branch (`solr4-compatible`) that deals with a compatibility issue with Solr 4.0.0.
+
+* The `waitFlush` parameter is deprecated (solr 4)
+
+DISCLAIMER:
+
+I am not the original author of the module and my grasp of C is weak at best. 
+I just tweaked the code to suit my needs. I offer no guarantee nor do I take responsibility for any possible loss of functionality you would suffer using this modified code.
+
 * http://pecl.php.net/package/solr
 * http://www.israelekpo.com/works
