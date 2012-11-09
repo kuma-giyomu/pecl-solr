@@ -1483,14 +1483,14 @@ end_doc_queries_loop :
 }
 /* }}} */
 
-/* {{{ proto SolrUpdateResponse SolrClient::optimize([string maxSegments [, bool waitFlush [, bool waitSearcher]])
+/* {{{ proto SolrUpdateResponse SolrClient::optimize([string maxSegments [, bool waitSearcher]])
    Sends an optimize XML request to the server. */
 PHP_METHOD(SolrClient, optimize)
 {
-	zend_bool waitFlush = 1, waitSearcher = 1;
+	zend_bool waitSearcher = 1;
 	char *maxSegments = "1";
 	int maxSegmentsLen = sizeof("1")-1;
-	char *waitFlushValue, *waitSearcherValue;
+	char *waitSearcherValue;
 	xmlNode *root_node = NULL;
 	xmlDoc *doc_ptr = NULL;
 	solr_client_t *client = NULL;
@@ -1499,20 +1499,18 @@ PHP_METHOD(SolrClient, optimize)
 	xmlChar *request_string = NULL;
 	zend_bool success = 1;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "|sbb", &maxSegments, &maxSegmentsLen, &waitFlush, &waitSearcher) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "|sbb", &maxSegments, &maxSegmentsLen, &waitSearcher) == FAILURE) {
 
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid parameter");
 
 		return;
 	}
 
-	waitFlushValue = (waitFlush)? "true" : "false";
 	waitSearcherValue = (waitSearcher)? "true" : "false";
 
 	doc_ptr = solr_xml_create_xml_doc((xmlChar *) "optimize", &root_node);
 
 	xmlNewProp(root_node, (xmlChar *) "maxSegments", (xmlChar *) maxSegments);
-	xmlNewProp(root_node, (xmlChar *) "waitFlush", (xmlChar *) waitFlushValue);
 	xmlNewProp(root_node, (xmlChar *) "waitSearcher", (xmlChar *) waitSearcherValue);
 
 	if (solr_fetch_client_entry(getThis(), &client TSRMLS_CC) == FAILURE)
@@ -1554,14 +1552,14 @@ PHP_METHOD(SolrClient, optimize)
 }
 /* }}} */
 
-/* {{{ proto SolrUpdateResponse SolrClient::commit([string maxSegments [, bool waitFlush [, bool waitSearcher]])
+/* {{{ proto SolrUpdateResponse SolrClient::commit([string maxSegments [, bool waitSearcher]])
    Sends a commit XML request to the server. */
 PHP_METHOD(SolrClient, commit)
 {
-	zend_bool waitFlush = 1, waitSearcher = 1;
+	zend_bool waitSearcher = 1;
 	char *maxSegments = "1";
 	int maxSegmentsLen = sizeof("1")-1;
-	char *waitFlushValue, *waitSearcherValue;
+	char *waitSearcherValue;
 	xmlNode *root_node = NULL;
 	xmlDoc *doc_ptr = NULL;
 	solr_client_t *client = NULL;
@@ -1570,20 +1568,18 @@ PHP_METHOD(SolrClient, commit)
 	xmlChar *request_string = NULL;
 	zend_bool success = 1;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "|sbb", &maxSegments, &maxSegmentsLen, &waitFlush, &waitSearcher) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "|sbb", &maxSegments, &maxSegmentsLen, &waitSearcher) == FAILURE) {
 
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid parameter");
 
 		return;
 	}
 
-	waitFlushValue = (waitFlush)? "true" : "false";
 	waitSearcherValue = (waitSearcher)? "true" : "false";
 
 	doc_ptr = solr_xml_create_xml_doc((xmlChar *) "commit", &root_node);
 
 	xmlNewProp(root_node, (xmlChar *) "maxSegments", (xmlChar *) maxSegments);
-	xmlNewProp(root_node, (xmlChar *) "waitFlush", (xmlChar *) waitFlushValue);
 	xmlNewProp(root_node, (xmlChar *) "waitSearcher", (xmlChar *) waitSearcherValue);
 
 	if (solr_fetch_client_entry(getThis(), &client TSRMLS_CC) == FAILURE)
